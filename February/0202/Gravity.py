@@ -14,14 +14,22 @@
 부호와 함께 테스트 케이스의 번호를 출력하고, 공백 문자 후 테스트 케이스에 대한 답을 출력한다.
 '''
 
+# 핵심 아이디어: 내 오른쪽에 있는 기둥 중 나보다 낮은 기둥의 개수가 곧 나의 최대 낙차이다.
 
 
-T = int(input())
+T = int(input())                                          # 테스트 케이스 입력
 
-for tc in range(1, T+1):
-    N = int(input())
-    boxes = list(map(int, input().split()))
-    max_drop = 0
-    for i in range(N):
-        current_drop = 
+for tc in range(1,T+1):
+    N = int(input())                                     # 가로 길이 입력
+    numrray = list(map(int, input().split()))            # 가로 길이에 맞는 1차원 배열
+    max_count = 0                                        # 최대 낙차 지정(0은 임시값)
 
+    for i in range(N):                                   # 모든 칸을 순회하며 각 칸의 '꼭대기 상자'가 얻을 수 있는 낙차를 계산
+        count = 0                                        # 현재 칸(i)의 상자가 오른쪽으로 이동할 수 있는 빈 칸의 수
+        for j in range(i+1, N):                          # 내 오른쪽 기둥들(j)을 확인하여 나보다 낮은 기둥이 몇 개인지 카운트
+            if numrray[i] > numrray[j]:                  # 내 키보다 작다 = 내가 그 위 공간을 지나갈 수 있다(낙차 발생)
+                count += 1                               
+        if count > max_count:                            # 계산된 낙차가 지금까지의 최대 낙차보다 크면 갱신
+            max_count = count
+    
+    print(f'#{tc} {max_count}')
